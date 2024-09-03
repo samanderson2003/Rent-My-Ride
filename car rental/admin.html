@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Reservation Details</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center">Admin - Reservation Details</h1>
+    <table class="table mt-4">
+      <thead>
+        <tr>
+          <th>Car Model</th>
+          <th>Number of Days</th>
+          <th>Total Price</th>
+          <th>From Date</th>
+          <th>To Date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- JavaScript code to populate the table rows -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    let reservations = JSON.parse(localStorage.getItem('reservations')) || [];
+  
+    function calculateNumberOfDays(fromDate, toDate) {
+      const oneDay = 1000 * 60 * 60 * 24; // milliseconds in a day
+      const startDate = new Date(fromDate);
+      const endDate = new Date(toDate);
+      const diffTime = Math.abs(endDate - startDate);
+      const diffDays = Math.ceil(diffTime / oneDay);
+      return diffDays;
+    }
+  
+    function updateTable() {
+      const tableBody = document.querySelector('tbody');
+      tableBody.innerHTML = '';
+  
+      reservations.forEach((reservation, index) => {
+        const numDays = calculateNumberOfDays(reservation.fromDate, reservation.toDate);
+        reservation.numDays = numDays;
+        const row = document.createElement('tr');
+  
+        row.innerHTML = `
+          <td>${reservation.carModel}</td>
+          <td>${numDays}</td>
+          <td>${reservation.totalPrice}</td>
+          <td>${reservation.fromDate}</td>
+          <td>${reservation.toDate}</td>
+          <td>${reservation.returned ? 'Returned' : reservation.overdue ? 'Overdue' : 'Pending'}</td>
+          <td>${!reservation.returned ? `<button class="btn btn-primary" onclick="markReturned(${index})">Accept</button>` : ''}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+  
+    function markReturned(index) {
+      if (!reservations[index].returned) {
+        reservations[index].returned = true;
+        localStorage.setItem('reservations', JSON.stringify(reservations));
+        updateTable();
+      }
+    }
+  
+    updateTable();
+  </script>
+  
+  
+</body>
+</html>

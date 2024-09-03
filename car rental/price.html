@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tamilnadu Taxi Car Rentals</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.11.0/css/bootstrap-datepicker.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.11.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      background-color: #212529;
+    }
+    .navbar {
+      background-color: #212529;
+    }
+    .navbar-brand, .navbar-nav .nav-link {
+      color: #fff;
+    }
+    .navbar-nav .nav-link:hover {
+      color: #a11616;
+    }
+    .navbar-brand:hover {
+      color: #fff;
+    }
+    .car-option {
+      border: 2px solid transparent;
+      transition: border-color 0.3s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+      background-color: #2724247c;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      color: #f7f7f7;
+    }
+    .car-option.selected {
+      border-color: #dc3545;
+    }
+    .car-option img {
+      width: 400px;
+      height: 300px;
+      border-radius: 8px;
+      image-rendering: crisp-edges;
+      border-image: space;
+      overflow: hidden;
+    }
+    .car-details {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+    }
+    .car-details h4 {
+      color: #dc3545;
+      margin-bottom: 10px;
+    }
+    #total-price {
+      font-size: 24px;
+      color: #dc3545;
+    }
+    .modal-content {
+      background-color: #f7f7f7;
+    }
+    .modal-footer {
+      border-top: none;
+    }
+    .btn-danger {
+      background-color: #dc3545;
+      border-color: #dc3545;
+    }
+    .btn-danger:hover {
+      background-color: #c82333;
+      border-color: #bd2130;
+    }
+    h1 {
+      color: #dc3545;
+      margin-bottom: 20px;
+    }
+    .white {
+      background-color: white;
+    }
+    .unavailable {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">Rebel Car Rentals</a>
+      <button class="navbar-toggler white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="homepage.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="price.html">Cars &amp Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<div class="container mt-5">
+  <h1 class="text-center">Tamilnadu Taxi Car Rentals</h1>
+  <div class="row mt-4">
+    <!-- Car 1 -->
+    <div class="col-md-4 mb-4">
+      <div class="car-option selected" id="car1" onmouseover="selectCar('car1', 1500, 800)">
+        <img src="innova.jpg" alt="Car 1">
+        <h4 class="mt-2">Toyota Innova</h4>
+        <p>Price: ₹1500/day | ₹800/half day</p>
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reservationModal" onclick="updateReservation('Toyota Innova', 1500)">Rent this Car</button>
+      </div>
+    </div>
+    <!-- Car 2 -->
+    <div class="col-md-4 mb-4">
+      <div class="car-option" id="car2" onmouseover="selectCar('car2', 1200, 700)">
+        <img src="city.jpg" alt="Car 2">
+        <h4 class="mt-2">Honda City</h4>
+        <p>Price: ₹1200/day | ₹700/half day</p>
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reservationModal" onclick="updateReservation('Honda City', 1200)">Rent this Car</button>
+      </div>
+    </div>
+    <!-- Car 3 -->
+    <div class="col-md-4 mb-4">
+      <div class="car-option" id="car3" onmouseover="selectCar('car3', 1000, 600)">
+        <img src="swift.jpg" alt="Car 3">
+        <h4 class="mt-2">Maruti Swift</h4>
+        <p>Price: ₹1000/day | ₹600/half day</p>
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reservationModal" onclick="updateReservation('Maruti Swift', 1000)">Rent this Car</button>
+      </div>
+    </div>
+    <!-- Car 4 -->
+    <div class="col-md-4 mb-4">
+      <div class="car-option" id="car4" onmouseover="selectCar('car4', 1800, 900)">
+        <img src="creta.jpg" alt="Car 4">
+        <h4 class="mt-2">Hyundai Creta</h4>
+        <p>Price: ₹1800/day | ₹900/half day</p>
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reservationModal" onclick="updateReservation('Hyundai Creta', 1800)">Rent this Car</button>
+      </div>
+    </div>
+    <!-- Car 5 -->
+    <div class="col-md-4 mb-4">
+      <div class="car-option" id="car5" onmouseover="selectCar('car5', 1600, 850)">
+        <img src="scorpio.jpg" alt="Car 5">
+        <h4 class="mt-2">Mahindra Scorpio</h4>
+        <p>Price: ₹1600/day | ₹850/half day</p>
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reservationModal" onclick="updateReservation('Mahindra Scorpio', 1600)">Rent this Car</button>
+      </div>
+    </div>
+    <!-- Car 6 -->
+    <div class="col-md-4 mb-4">
+      <div class="car-option" id="car6" onmouseover="selectCar('car6', 1300, 750)">
+        <img src="nexon.jpg" alt="Car 6">
+        <h4 class="mt-2">Tata Nexon</h4>
+        <p>Price: ₹1300/day | ₹750/half day</p>
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reservationModal" onclick="updateReservation('Tata Nexon', 1300)">Rent this Car</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Reservation Modal -->
+<div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reservationModalLabel">Make a Reservation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="car-details">
+          <h4 id="selectedCar"></h4>
+
+          <!-- Use HTML5 date inputs -->
+          <p>From:
+            <input type="date" id="fromDate" class="form-control">
+          </p>
+          <p>To:
+            <input type="date" id="toDate" class="form-control">
+          </p>
+          <p>Total Price: <span id="total-price">₹0</span></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <!-- Updated "Proceed to Payment" button to link to payment.html -->
+        <a href="payment.html"><button type="button" class="btn btn-danger" onclick="saveReservation()">Proceed to Payment</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let selectedCarId = "car1";
+  let carPricePerDay = 1500;
+  
+  const carAvailability = {
+    car1: true,
+    car2: true,
+    car3: true,
+    car4: true,
+    car5: true,
+    car6: true,
+  };
+
+  $(document).ready(function() {
+    $('#fromDate, #toDate').change(function() {
+      updateReservation();
+    });
+  
+    $('#fromDate').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true
+    });
+  
+    $('#toDate').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true
+    });
+  });
+  
+  function selectCar(carId, pricePerDay) {
+    document.querySelectorAll('.car-option').forEach(option => {
+      option.classList.remove('selected');
+    });
+    document.getElementById(carId).classList.add('selected');
+    selectedCarId = carId;
+    carPricePerDay = pricePerDay;
+    updateReservation();
+  }
+  
+  function updateReservation() {
+    const fromDate = new Date(document.getElementById('fromDate').value);
+
+    // Ensure that "To Date" cannot be less than "From Date"
+    document.getElementById('toDate').min = document.getElementById('fromDate').value;
+
+    const toDate = new Date(document.getElementById('toDate').value);
+  
+    if (isNaN(fromDate.getTime()) || isNaN(toDate.getTime())) {
+      return;
+    }
+  
+    const numDays = Math.ceil((toDate - fromDate) / (1000 * 60 * 60 * 24));
+    const totalPrice = carPricePerDay * numDays;
+  
+    const carName = document.getElementById(selectedCarId).querySelector('h4').textContent;
+      
+    document.getElementById('selectedCar').textContent = carName;
+    document.getElementById('total-price').textContent = `₹${totalPrice}`;
+  }
+
+
+  function saveReservation() {
+    const fromDate = document.getElementById('fromDate').value;
+    const toDate = document.getElementById('toDate').value;
+    const carName = document.getElementById(selectedCarId).querySelector('h4').textContent;
+    const totalPrice = document.getElementById('total-price').textContent;
+
+    const reservation = {
+      carModel: carName,
+      totalPrice: totalPrice,
+      fromDate: fromDate,
+      toDate: toDate
+    };
+
+    let reservations = JSON.parse(localStorage.getItem('reservations')) || [];
+    reservations.push(reservation);
+
+    carAvailability[selectedCarId] = false;
+    updateCarAvailability(selectedCarId, false);
+
+    localStorage.setItem('reservations', JSON.stringify(reservations));
+    localStorage.setItem('carAvailability', JSON.stringify(carAvailability));
+
+    document.getElementById('fromDate').value = '';
+    document.getElementById('toDate').value = '';
+
+    updateReservation();
+    
+    $('#reservationModal').modal('hide');
+  }
+  
+  function updateCarAvailability(carId, isAvailable) {
+    const carOption = document.getElementById(carId);
+    const rentButton = carOption.querySelector('.btn-danger');
+
+    if (isAvailable) {
+      carOption.classList.remove('unavailable');
+      rentButton.disabled = false;
+    } else {
+      carOption.classList.add('unavailable');
+      rentButton.disabled = true;
+    }
+  }
+
+  const storedCarAvailability = JSON.parse(localStorage.getItem('carAvailability')) || {};
+
+  for (const carId in carAvailability) {
+    carAvailability[carId] = storedCarAvailability[carId] !== false;
+    updateCarAvailability(carId, carAvailability[carId]);
+  }
+</script>
+
+</body>
+</html>

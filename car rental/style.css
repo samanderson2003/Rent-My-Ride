@@ -1,0 +1,53 @@
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .carousel-caption {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 30px;
+  width: 100%;
+  max-width: 1000px; /* Adjust this value as needed */
+  height: 150px;
+}
+.carousel-item img {
+  max-height: 1000px; /* Adjust this value as needed */
+  object-fit: cover;
+}
+    .navbar {
+      background-color: #212529;
+    }
+    .navbar-brand, .navbar-nav .nav-link {
+      color: #fff;
+    }
+    .jumbotron {
+      background-image: url('car-rental-bg.jpg');
+      background-size: cover;
+      color: #fff;
+      text-align: center;
+      padding: 100px 0;
+    }
+    .rent-button {
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .rent-button:hover {
+      background-color: #c82333;
+    }
+    .footer {
+      background-color: #f8f9fa;
+      padding: 20px 0;
+      text-align: center;
+    }
